@@ -1,4 +1,4 @@
-package com.furkanyesilyurt.creditapplicationsystem.dto.givencredit;
+package com.furkanyesilyurt.creditapplicationsystem.dto.givenloan;
 
 import com.furkanyesilyurt.creditapplicationsystem.enums.ResponseStatus;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,12 @@ import java.math.BigDecimal;
 @Data
 @Builder
 @AllArgsConstructor
-public class CreditResponseDto {
+public class LoanResponseDto {
 
     private ResponseStatus responseStatus;
     private BigDecimal creditLimit;
 
-    public CreditResponseDto(ResponseStatus responseStatus) {
+    public LoanResponseDto(ResponseStatus responseStatus) {
         this.responseStatus = responseStatus;
     }
 

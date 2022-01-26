@@ -1,17 +1,17 @@
 package com.furkanyesilyurt.creditapplicationsystem.service.entityservice;
 
-import com.furkanyesilyurt.creditapplicationsystem.converter.IGivenCreditMapper;
-import com.furkanyesilyurt.creditapplicationsystem.dto.givencredit.CreditResponseDto;
-import com.furkanyesilyurt.creditapplicationsystem.dto.givencredit.GivenCreditDto;
-import com.furkanyesilyurt.creditapplicationsystem.dto.givencredit.NewGivenCreditDto;
+import com.furkanyesilyurt.creditapplicationsystem.converter.IGivenLoanMapper;
+import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.GivenLoanDto;
+import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.LoanResponseDto;
+import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.NewGivenLoanDto;
 import com.furkanyesilyurt.creditapplicationsystem.entity.CreditScore;
 import com.furkanyesilyurt.creditapplicationsystem.entity.Customer;
-import com.furkanyesilyurt.creditapplicationsystem.entity.GivenCredit;
+import com.furkanyesilyurt.creditapplicationsystem.entity.GivenLoan;
 import com.furkanyesilyurt.creditapplicationsystem.enums.Multipliers;
 import com.furkanyesilyurt.creditapplicationsystem.enums.ResponseStatus;
 import com.furkanyesilyurt.creditapplicationsystem.excepiton.customer.CustomerNotFoundException;
-import com.furkanyesilyurt.creditapplicationsystem.excepiton.givencredit.GivenCreditNotFoundException;
-import com.furkanyesilyurt.creditapplicationsystem.repository.IGivenCreditDao;
+import com.furkanyesilyurt.creditapplicationsystem.excepiton.givenloan.GivenCreditNotFoundException;
+import com.furkanyesilyurt.creditapplicationsystem.repository.IGivenLoanDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,13 +26,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GivenCreditEntityService {
+public class GivenLoanEntityService {
 
-    private final IGivenCreditDao givenCreditDao;
+    private final IGivenLoanDao givenLoanDao;
     private final CustomerEntityService customerEntityService;
     private final CreditScoreEntityService creditScoreEntityService;
 
-    public CreditResponseDto inquireCredit(String identityNo) {
+    public LoanResponseDto inquireCredit(String identityNo) {
 
         log.info("Request: {}", "Successful execution of request to application of loan.");
 
@@ -46,34 +46,34 @@ public class GivenCreditEntityService {
 
         if (score < 500) {
             log.warn("Customer's credit score is less than 500. Can't get a loan.");
-            return new CreditResponseDto(ResponseStatus.REJECTION);
+            return new LoanResponseDto(ResponseStatus.REJECTION);
 
         } else if (score >= 500 && score < 1000) {
 
             if (monthlyIncome < 5000) {
                 totalCreditLimit = calculateTotalCreditLimit(10000.0, guarantee, 0.1, monthlyIncome, score);
-                saveGivenCredit(customer,creditScore, totalCreditLimit);
+                saveGivenLoan(customer,creditScore, totalCreditLimit);
                 sendSms();
-                return new CreditResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+                return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
 
             } else if (monthlyIncome >= 5000 && monthlyIncome < 10000) {
                 totalCreditLimit = calculateTotalCreditLimit(20000.0, guarantee, 0.2, monthlyIncome, score);
-                saveGivenCredit(customer,creditScore, totalCreditLimit);
+                saveGivenLoan(customer,creditScore, totalCreditLimit);
                 sendSms();
-                return new CreditResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+                return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
 
             } else {
                 totalCreditLimit = calculateTotalCreditLimit(0.0, guarantee, 0.25, monthlyIncome, score);
-                saveGivenCredit(customer,creditScore, totalCreditLimit);
+                saveGivenLoan(customer,creditScore, totalCreditLimit);
                 sendSms();
-                return new CreditResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+                return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
             }
 
         } else {
             totalCreditLimit = calculateTotalCreditLimit(0.0, guarantee, 0.5, monthlyIncome, score);
-            saveGivenCredit(customer,creditScore, totalCreditLimit);
+            saveGivenLoan(customer,creditScore, totalCreditLimit);
             sendSms();
-            return new CreditResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+            return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
         }
 
     }
@@ -101,27 +101,27 @@ public class GivenCreditEntityService {
         return totalLimit;
     }
 
-    public void saveGivenCredit(Customer customer, CreditScore creditScore, Double creditLimit){
-        NewGivenCreditDto newGivenCreditDto = new NewGivenCreditDto();
+    public void saveGivenLoan(Customer customer, CreditScore creditScore, Double creditLimit){
+        NewGivenLoanDto newGivenLoanDto = new NewGivenLoanDto();
 
-        newGivenCreditDto.setCustomerId(customer.getId());
-        newGivenCreditDto.setScoreId(creditScore.getId());
-        newGivenCreditDto.setCreditLimit(new BigDecimal(creditLimit));
+        newGivenLoanDto.setCustomerId(customer.getId());
+        newGivenLoanDto.setScoreId(creditScore.getId());
+        newGivenLoanDto.setCreditLimit(new BigDecimal(creditLimit));
 
-        GivenCredit givenCredit = IGivenCreditMapper.INSTANCE.convertNewGivenCreditDtoToGivenCredit(newGivenCreditDto);
+        GivenLoan givenLoan = IGivenLoanMapper.INSTANCE.convertNewGivenLoanDtoToGivenLoan(newGivenLoanDto);
 
-        log.info("Response: {}", "The credit of user ID " +customer.getIdentityNo() + " was recorded in the database.");
+        log.info("Response: {}", "The loan of user ID " +customer.getIdentityNo() + " was recorded in the database.");
 
-        givenCreditDao.save(givenCredit);
+        givenLoanDao.save(givenLoan);
     }
 
     public void sendSms(){
         log.info("Informed by sms.");
     } //TODO: Send SMS method
 
-    public List<GivenCreditDto> getApprovedCredit(String identityNo, String birthdays) throws ParseException {
+    public List<GivenLoanDto> getApprovedLoan(String identityNo, String birthdays) throws ParseException {
 
-        log.info("Request: {}", "Successful execution of request to find approved credit.");
+        log.info("Request: {}", "Successful execution of request to find approved loan.");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date birthday = sdf.parse(birthdays);
@@ -129,27 +129,27 @@ public class GivenCreditEntityService {
         Boolean isExistsCustomer = customerEntityService.existsCustomerByIdentityNoAndBirthday(identityNo, birthday);
         if(!isExistsCustomer){
             log.error("Customer identityNo: " + identityNo +
-                    " and customer birthday: " + birthday + "is not matching with each other.");
+                    " and customer birthday: " + birthday + " is not matching with each other.");
             throw new CustomerNotFoundException("Customer identityNo: " + identityNo +
-                    " and customer birthday: " + birthday + "is not matching with each other.");
+                    " and customer birthday: " + birthday + " is not matching with each other.");
         }
         Customer customer = customerEntityService.findCustomerByIdentityNoAndBirthday(identityNo, birthday);
 
-        Boolean isExistsGivenCredit = givenCreditDao.existsGivenCreditByCustomer(customer);
-        if(!isExistsGivenCredit){
+        Boolean isExistsGivenLoan = givenLoanDao.existsGivenLoanByCustomer(customer);
+        if(!isExistsGivenLoan){
             log.error("The credit record of the user named " + customer.getFirstname() + " was not found.");
             throw new GivenCreditNotFoundException("The credit record of the user named " + customer.getFirstname() + " was not found.");
         }
-        List<GivenCredit> givenCredits = givenCreditDao.findGivenCreditByCustomer(customer);
+        List<GivenLoan> givenLoans = givenLoanDao.findGivenLoanByCustomer(customer);
 
-        List<GivenCreditDto> givenCreditDtos = new ArrayList<>();
-        for(GivenCredit givenCredit : givenCredits){
-            givenCreditDtos.add(IGivenCreditMapper.INSTANCE.convertGivenCreditToGivenCreditDto(givenCredit));
+        List<GivenLoanDto> givenLoanDtos = new ArrayList<>();
+        for(GivenLoan givenLoan : givenLoans){
+            givenLoanDtos.add(IGivenLoanMapper.INSTANCE.convertGivenLoanToGivenLoanDto(givenLoan));
         }
 
-        log.info("Response: {}", "Accepted credit of the customer whose birthday is " + birthday + " and ID number is " + identityNo);
+        log.info("Response: {}", "Accepted loan of the customer whose birthday is " + birthday + " and ID number is " + identityNo);
 
-        return givenCreditDtos;
+        return givenLoanDtos;
     }
 
 }

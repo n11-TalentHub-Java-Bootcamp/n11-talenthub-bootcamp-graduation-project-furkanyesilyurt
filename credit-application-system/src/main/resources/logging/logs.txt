@@ -17,4 +17,33 @@
 ""2022-01-24 02:22:27 [http-nio-8080-exec-1] DEBUG c.f.c.s.e.CustomerEntityService - Response: All customers have been brought.
 ""2022-01-24 02:22:35 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 ""2022-01-24 02:22:35 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+""2022-01-26 10:03:43 [main] INFO  c.f.c.CreditApplicationSystemApplicationTests - Starting CreditApplicationSystemApplicationTests using Java 11.0.12 on Mühendis with PID 5700 (started by fyesi in C:\Users\fyesi\OneDrive\Masaüstü\n11-bootcamp\credit-application-system)
+""2022-01-26 10:03:43 [main] DEBUG c.f.c.CreditApplicationSystemApplicationTests - Running with Spring Boot v2.6.2, Spring v5.3.14
+""2022-01-26 10:03:43 [main] INFO  c.f.c.CreditApplicationSystemApplicationTests - No active profile set, falling back to default profiles: default
+""2022-01-26 10:03:44 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""2022-01-26 10:03:44 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.3.Final
+""2022-01-26 10:03:45 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2022-01-26 10:03:45 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+""2022-01-26 10:03:45 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+""2022-01-26 10:03:45 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+""2022-01-26 10:03:46 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2022-01-26 10:03:47 [main] INFO  c.f.c.CreditApplicationSystemApplicationTests - Started CreditApplicationSystemApplicationTests in 4.311 seconds (JVM running for 5.111)
+""2022-01-26 10:03:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+""2022-01-26 10:03:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+""2022-01-26 10:04:00 [main] INFO  c.f.c.CreditApplicationSystemApplication - Starting CreditApplicationSystemApplication using Java 11.0.12 on MÃ¼hendis with PID 10376 (C:\Users\fyesi\OneDrive\MasaÃ¼stÃ¼\n11-bootcamp\credit-application-system\target\classes started by fyesi in C:\Users\fyesi\OneDrive\MasaÃ¼stÃ¼\n11-bootcamp\credit-application-system)
+""2022-01-26 10:04:00 [main] DEBUG c.f.c.CreditApplicationSystemApplication - Running with Spring Boot v2.6.2, Spring v5.3.14
+""2022-01-26 10:04:00 [main] INFO  c.f.c.CreditApplicationSystemApplication - No active profile set, falling back to default profiles: default
+""2022-01-26 10:04:00 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""2022-01-26 10:04:00 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+""2022-01-26 10:04:00 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""2022-01-26 10:04:01 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""2022-01-26 10:04:01 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.3.Final
+""2022-01-26 10:04:01 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2022-01-26 10:04:01 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+""2022-01-26 10:04:01 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+""2022-01-26 10:04:01 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+""2022-01-26 10:04:01 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2022-01-26 10:04:02 [main] INFO  c.f.c.CreditApplicationSystemApplication - Started CreditApplicationSystemApplication in 2.82 seconds (JVM running for 4.03)
+""2022-01-26 10:04:05 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+""2022-01-26 10:04:05 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
 "
