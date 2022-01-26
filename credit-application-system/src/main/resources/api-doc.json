@@ -1,0 +1,329 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Banking API",
+    "description": "Credit Application System",
+    "license": {
+      "name": "Banking API licence"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Customer Controller",
+      "description": "Here we can list, save, delete and update customers."
+    },
+    {
+      "name": "Loan Controller",
+      "description": "Here we can apply for a loan and inquire about the loan."
+    }
+  ],
+  "paths": {
+    "/api/v1/customers": {
+      "get": {
+        "tags": [
+          "Customer Controller"
+        ],
+        "summary": "All customers are listed.",
+        "operationId": "getAllCustomers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customer Controller"
+        ],
+        "summary": "Update a customer",
+        "operationId": "updateCustomer",
+        "parameters": [
+          {
+            "name": "identityNo",
+            "in": "query",
+            "description": "ID number of the customer to be updated.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCustomerDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customer Controller"
+        ],
+        "summary": "Save a customer",
+        "operationId": "saveCustomer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCustomerDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Customer Controller"
+        ],
+        "summary": "Delete a customer",
+        "operationId": "deleteCustomer",
+        "parameters": [
+          {
+            "name": "identityNo",
+            "in": "query",
+            "description": "ID number of the customer to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loans": {
+      "get": {
+        "tags": [
+          "Loan Controller"
+        ],
+        "summary": "Apply for a loan with the customer's identification number.",
+        "operationId": "inquireLoan",
+        "parameters": [
+          {
+            "name": "identityNo",
+            "in": "query",
+            "description": "The identification number of the relevant customer.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loans/approved-credit": {
+      "get": {
+        "tags": [
+          "Loan Controller"
+        ],
+        "summary": "See approved loan application the customer's identification number.",
+        "operationId": "getApprovedLoan",
+        "parameters": [
+          {
+            "name": "identityNo",
+            "in": "query",
+            "description": "The identification number of the relevant customer.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "birthday",
+            "in": "query",
+            "description": "The birthday date of the relevant customer. Format yyyy-MM-dd.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GivenLoanDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NewCustomerDto": {
+        "type": "object",
+        "properties": {
+          "identityNo": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "monthlyIncome": {
+            "type": "number"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "guarantee": {
+            "type": "number"
+          }
+        },
+        "description": "the schema is where the new customer's information is written"
+      },
+      "CustomerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "identityNo": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "monthlyIncome": {
+            "type": "number"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "guarantee": {
+            "type": "number"
+          }
+        },
+        "description": "the scheme in which customers are listed"
+      },
+      "LoanResponseDto": {
+        "type": "object",
+        "properties": {
+          "responseStatus": {
+            "type": "string",
+            "enum": [
+              "REJECTION",
+              "APPROVAL"
+            ]
+          },
+          "creditLimit": {
+            "type": "number"
+          }
+        },
+        "description": "the response to the loan application"
+      },
+      "GivenLoanDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "scoreId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "creditLimit": {
+            "type": "number"
+          }
+        },
+        "description": "The scheme by which the approved loan is viewed"
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-package com.furkanyesilyurt.creditapplicationsystem.enums;
+package com.furkanyesilyurt.creditapplicationsystem.constant;
 
 import lombok.*;
 

@@ -30,8 +30,8 @@ public class CustomerEntityService {
 
         List<Customer> customers = customerDao.findAll();
         if(customers.isEmpty()){
-            log.error("There ara no customers to list.");
-            throw new CustomerNotFoundException("There ara no customers to list.");
+            log.error("There are no customers to list.");
+            throw new CustomerNotFoundException("There are no customers to list.");
         }
         List<CustomerDto> customerDtos = new ArrayList<>();
         for(Customer customer : customers){
@@ -49,8 +49,8 @@ public class CustomerEntityService {
 
         Customer customer = ICustomerMapper.INSTANCE.convertNewCustomerDtoToCustomer(newCustomerDto);
         customer = customerDao.save(customer);
-        Long score = calculateCreditScore(customer);
-        saveCreditScore(score, customer);
+        Long score = creditScoreEntityService.calculateCreditScore(customer);
+        creditScoreEntityService.saveCreditScore(score, customer);
 
         log.info("Response: {}", "Customer with ID " + customer.getIdentityNo() + " is successfully registered.");
 
@@ -97,9 +97,9 @@ public class CustomerEntityService {
         customer = customerDao.save(customer);
 
         var creditScore = creditScoreEntityService.getCreditScoreByCustomer(customer);
-        Long score = calculateCreditScore(customer);
+        Long score = creditScoreEntityService.calculateCreditScore(customer);
         creditScore.setCreditScore(score);
-        updateCreditScore(creditScore);
+        creditScoreEntityService.updateCreditScore(creditScore);
 
         log.info("Response: {}", "Customer with ID " + customer.getIdentityNo() + " is successfully updated.");
 
@@ -108,27 +108,6 @@ public class CustomerEntityService {
 
     public Customer findCustomerByIdentityNo(String identityNo){
         return customerDao.findCustomerByIdentityNo(identityNo);
-    }
-
-    //12345651474 -> 74 * 10 + 100 = 840
-    public Long calculateCreditScore(Customer customer){
-        if(customer.getIdentityNo().length() < 3){
-            throw new IdentityNoIsTooShortException("The identity no is too short. Recommended length is 11 characters.");
-        }
-        var beginIndex = customer.getIdentityNo().length() - 2;
-        var endIndex = customer.getIdentityNo().length() - 1;
-        return Long.parseLong(customer.getIdentityNo().substring(beginIndex,endIndex)) * 10 + 100;
-    }
-
-    public void saveCreditScore(Long score, Customer customer){
-        CreditScore creditScore = new CreditScore();
-        creditScore.setCreditScore(score);
-        creditScore.setCustomer(customer);
-        creditScoreEntityService.saveCreditScore(creditScore);
-    }
-
-    public void updateCreditScore(CreditScore creditScore){
-        creditScoreEntityService.saveCreditScore(creditScore);
     }
 
     public Boolean existsCustomerByIdentityNoAndBirthday(String identityNo, Date birthday){

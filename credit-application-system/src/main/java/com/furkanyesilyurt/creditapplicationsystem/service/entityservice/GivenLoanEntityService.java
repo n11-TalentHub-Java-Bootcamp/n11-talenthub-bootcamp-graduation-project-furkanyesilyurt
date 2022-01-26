@@ -7,8 +7,8 @@ import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.NewGivenLoanDto
 import com.furkanyesilyurt.creditapplicationsystem.entity.CreditScore;
 import com.furkanyesilyurt.creditapplicationsystem.entity.Customer;
 import com.furkanyesilyurt.creditapplicationsystem.entity.GivenLoan;
-import com.furkanyesilyurt.creditapplicationsystem.enums.Multipliers;
-import com.furkanyesilyurt.creditapplicationsystem.enums.ResponseStatus;
+import com.furkanyesilyurt.creditapplicationsystem.constant.Multipliers;
+import com.furkanyesilyurt.creditapplicationsystem.constant.ResponseStatus;
 import com.furkanyesilyurt.creditapplicationsystem.excepiton.customer.CustomerNotFoundException;
 import com.furkanyesilyurt.creditapplicationsystem.excepiton.givenloan.GivenCreditNotFoundException;
 import com.furkanyesilyurt.creditapplicationsystem.repository.IGivenLoanDao;
