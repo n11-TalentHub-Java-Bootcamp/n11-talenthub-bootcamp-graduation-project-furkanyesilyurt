@@ -18,6 +18,7 @@ public class CustomerDto {
     private String lastname;
     private BigDecimal monthlyIncome;
     private String phone;
+//    private String email;
     private Date birthday;
     private BigDecimal guarantee;
 

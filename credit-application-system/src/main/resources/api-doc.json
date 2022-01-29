@@ -2,9 +2,10 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Banking API",
-    "description": "Credit Application System",
-    "license": {
-      "name": "Banking API licence"
+    "description": "Credit Application System | This API is developed for n11 Java Bootcamp Graduate Homework.",
+    "contact": {
+      "name": "Furkan Yesilyurt",
+      "email": "f.yesilyurt@outlook.com"
     },
     "version": "1.0"
   },

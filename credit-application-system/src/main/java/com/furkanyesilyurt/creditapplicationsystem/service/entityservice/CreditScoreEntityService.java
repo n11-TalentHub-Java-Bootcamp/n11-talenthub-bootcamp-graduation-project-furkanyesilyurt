@@ -34,7 +34,6 @@ public class CreditScoreEntityService {
         log.info("Credit score " + creditScore.getCreditScore() + " was successfully saved.");
     }
 
-
     public void updateCreditScore(CreditScore creditScore){
         creditScoreDao.save(creditScore);
         log.info("Credit score " + creditScore.getCreditScore() + " was successfully saved.");

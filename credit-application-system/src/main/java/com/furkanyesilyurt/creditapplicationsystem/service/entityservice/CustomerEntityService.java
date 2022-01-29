@@ -12,13 +12,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional // for delete method
 public class CustomerEntityService {
 
     private final ICustomerDao customerDao;
@@ -57,6 +60,10 @@ public class CustomerEntityService {
         return ICustomerMapper.INSTANCE.convertCustomerToCustomerDto(customer);
     }
 
+    // First it removes the credit score record which will found as identity no.
+    // Then it removes the relevant customer.
+    // So there are two different queries, need a transactional annotation
+    @Transactional
     public CustomerDto deleteCustomer(String identityNo){
 
         log.info("Request: {}", "Successful execution of request to delete a customer.");
@@ -116,6 +123,20 @@ public class CustomerEntityService {
 
     public Customer findCustomerByIdentityNoAndBirthday(String identityNo, Date birthday){
         return customerDao.findCustomerByIdentityNoAndBirthday(identityNo, birthday);
+    }
+
+    public Customer getById(Long id) {
+        Customer customer;
+        Optional<Customer> optionalCustomer = customerDao.findById(id);
+        if (optionalCustomer.isPresent()){
+            customer = optionalCustomer.get();
+        } else {
+            throw new RuntimeException("Customer not found!");
+        }
+        return customer;
+    }
+    public void delete(Customer customer){
+        customerDao.delete(customer);
     }
 
 }

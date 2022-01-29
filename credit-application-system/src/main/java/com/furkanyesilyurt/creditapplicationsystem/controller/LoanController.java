@@ -2,7 +2,7 @@ package com.furkanyesilyurt.creditapplicationsystem.controller;
 
 import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.GivenLoanDto;
 import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.LoanResponseDto;
-import com.furkanyesilyurt.creditapplicationsystem.service.entityservice.GivenLoanEntityService;
+import com.furkanyesilyurt.creditapplicationsystem.service.entityservice.givenloanentityservice.GivenLoanEntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

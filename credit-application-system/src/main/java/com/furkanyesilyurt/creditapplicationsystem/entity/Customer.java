@@ -1,6 +1,7 @@
 package com.furkanyesilyurt.creditapplicationsystem.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -38,6 +40,9 @@ public class Customer implements Serializable {
 
     @Column(name = "phone", nullable = false)
     private String phone;
+
+//    @Column(name = "email", nullable = false)
+//    private String email;
 
     @Column(name = "birthday",nullable = false)
     @Temporal(TemporalType.DATE)

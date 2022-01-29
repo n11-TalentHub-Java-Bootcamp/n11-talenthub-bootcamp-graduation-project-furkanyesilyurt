@@ -1,6 +1,7 @@
 package com.furkanyesilyurt.creditapplicationsystem.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.info.Info;
 
@@ -20,14 +21,21 @@ public class SwaggerConfig {
                 .pathsToMatch("/furkanyesilyurt/**")
                 .build();
     }
+
     @Bean
-    public OpenAPI customOpenAPI(@Value("Credit Application System") String description, @Value("1.0") String version) {
+    public OpenAPI customOpenAPI() {
+
+        Contact contact = new Contact();
+        contact.email("f.yesilyurt@outlook.com");
+        contact.name("Furkan Yesilyurt");
+
         return new OpenAPI()
                 .info(new Info()
                         .title("Banking API")
-                        .version(version)
-                        .description(description)
-                        .license(new License().name("Banking API licence")));
+                        .description("Credit Application System | This API is developed for n11 Java Bootcamp Graduate Homework.")
+                        .version("1.0")
+                        .contact(contact)
+                );
     }
 
 }

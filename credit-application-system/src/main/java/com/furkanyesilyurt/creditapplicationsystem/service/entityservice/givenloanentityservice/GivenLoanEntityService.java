@@ -1,4 +1,4 @@
-package com.furkanyesilyurt.creditapplicationsystem.service.entityservice;
+package com.furkanyesilyurt.creditapplicationsystem.service.entityservice.givenloanentityservice;
 
 import com.furkanyesilyurt.creditapplicationsystem.converter.IGivenLoanMapper;
 import com.furkanyesilyurt.creditapplicationsystem.dto.givenloan.GivenLoanDto;
@@ -12,6 +12,8 @@ import com.furkanyesilyurt.creditapplicationsystem.constant.ResponseStatus;
 import com.furkanyesilyurt.creditapplicationsystem.excepiton.customer.CustomerNotFoundException;
 import com.furkanyesilyurt.creditapplicationsystem.excepiton.givenloan.GivenCreditNotFoundException;
 import com.furkanyesilyurt.creditapplicationsystem.repository.IGivenLoanDao;
+import com.furkanyesilyurt.creditapplicationsystem.service.entityservice.CreditScoreEntityService;
+import com.furkanyesilyurt.creditapplicationsystem.service.entityservice.CustomerEntityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,66 +44,42 @@ public class GivenLoanEntityService {
         Double monthlyIncome = customer.getMonthlyIncome().doubleValue();
         Double guarantee = customer.getGuarantee().doubleValue();
         Long score = creditScore.getCreditScore();
-        Double totalCreditLimit;
+
+        LoanResponseDto responseDto = getCreditLimit(score, guarantee, monthlyIncome);
+        if (responseDto.getResponseStatus() != ResponseStatus.REJECTION) {
+            saveGivenLoan(customer, creditScore, responseDto.getCreditLimit().doubleValue());
+            sendSms();
+        }
+
+        return responseDto;
+    }
+
+    public LoanResponseDto getCreditLimit(Long score, Double guarantee, Double monthlyIncome) {
+        Context context = new Context();
 
         if (score < 500) {
-            log.warn("Customer's credit score is less than 500. Can't get a loan.");
-            return new LoanResponseDto(ResponseStatus.REJECTION);
+            context.setCreditLimitStrategy(new CalculateCreditLimitScoreBelow500());
 
         } else if (score >= 500 && score < 1000) {
 
             if (monthlyIncome < 5000) {
-                totalCreditLimit = calculateTotalCreditLimit(10000.0, guarantee, 0.1, monthlyIncome, score);
-                saveGivenLoan(customer,creditScore, totalCreditLimit);
-                sendSms();
-                return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+                context.setCreditLimitStrategy(new CalculateCreditLimitIncomeBelow5000());
 
             } else if (monthlyIncome >= 5000 && monthlyIncome < 10000) {
-                totalCreditLimit = calculateTotalCreditLimit(20000.0, guarantee, 0.2, monthlyIncome, score);
-                saveGivenLoan(customer,creditScore, totalCreditLimit);
-                sendSms();
-                return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+                context.setCreditLimitStrategy(new CalculateCreditLimitIncomeBelow10000());
 
             } else {
-                totalCreditLimit = calculateTotalCreditLimit(0.0, guarantee, 0.25, monthlyIncome, score);
-                saveGivenLoan(customer,creditScore, totalCreditLimit);
-                sendSms();
-                return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+                context.setCreditLimitStrategy(new CalculateCreditLimitIncomeAbove10000());
             }
 
         } else {
-            totalCreditLimit = calculateTotalCreditLimit(0.0, guarantee, 0.5, monthlyIncome, score);
-            saveGivenLoan(customer,creditScore, totalCreditLimit);
-            sendSms();
-            return new LoanResponseDto(ResponseStatus.APPROVAL, new BigDecimal(totalCreditLimit));
+            context.setCreditLimitStrategy(new CalculateCreditLimitScoreAbove1000());
         }
 
+        return context.execute(guarantee, monthlyIncome);
     }
 
-    public Double calculateTotalCreditLimit(Double creditLimit, Double guarantee, Double guaranteePercent, Double monthlyIncome, Long score) {
-        Double totalLimit;
-
-        if (score >= 1000) {
-            totalLimit = monthlyIncome * Multipliers.CREDIT_LIMIT_MULTIPLIER.getMultiplier();
-
-        } else {
-
-            if (monthlyIncome >= 10000) {
-                totalLimit = monthlyIncome * Multipliers.CREDIT_LIMIT_MULTIPLIER.getMultiplier() / 2;
-            } else {
-                totalLimit = creditLimit;
-            }
-
-        }
-
-        if (guarantee != null) {
-            totalLimit += guarantee * guaranteePercent;
-        }
-
-        return totalLimit;
-    }
-
-    public void saveGivenLoan(Customer customer, CreditScore creditScore, Double creditLimit){
+    public void saveGivenLoan(Customer customer, CreditScore creditScore, Double creditLimit) {
         NewGivenLoanDto newGivenLoanDto = new NewGivenLoanDto();
 
         newGivenLoanDto.setCustomerId(customer.getId());
@@ -110,14 +88,14 @@ public class GivenLoanEntityService {
 
         GivenLoan givenLoan = IGivenLoanMapper.INSTANCE.convertNewGivenLoanDtoToGivenLoan(newGivenLoanDto);
 
-        log.info("Response: {}", "The loan of user ID " +customer.getIdentityNo() + " was recorded in the database.");
+        log.info("Response: {}", "The loan of user ID " + customer.getIdentityNo() + " was recorded in the database.");
 
         givenLoanDao.save(givenLoan);
     }
 
-    public void sendSms(){
+    public void sendSms() {
         log.info("Informed by sms.");
-    } //TODO: Send SMS method
+    }
 
     public List<GivenLoanDto> getApprovedLoan(String identityNo, String birthdays) throws ParseException {
 
@@ -127,7 +105,7 @@ public class GivenLoanEntityService {
         Date birthday = sdf.parse(birthdays);
 
         Boolean isExistsCustomer = customerEntityService.existsCustomerByIdentityNoAndBirthday(identityNo, birthday);
-        if(!isExistsCustomer){
+        if (!isExistsCustomer) {
             log.error("Customer identityNo: " + identityNo +
                     " and customer birthday: " + birthday + " is not matching with each other.");
             throw new CustomerNotFoundException("Customer identityNo: " + identityNo +
@@ -136,14 +114,14 @@ public class GivenLoanEntityService {
         Customer customer = customerEntityService.findCustomerByIdentityNoAndBirthday(identityNo, birthday);
 
         Boolean isExistsGivenLoan = givenLoanDao.existsGivenLoanByCustomer(customer);
-        if(!isExistsGivenLoan){
+        if (!isExistsGivenLoan) {
             log.error("The credit record of the user named " + customer.getFirstname() + " was not found.");
             throw new GivenCreditNotFoundException("The credit record of the user named " + customer.getFirstname() + " was not found.");
         }
         List<GivenLoan> givenLoans = givenLoanDao.findGivenLoanByCustomer(customer);
 
         List<GivenLoanDto> givenLoanDtos = new ArrayList<>();
-        for(GivenLoan givenLoan : givenLoans){
+        for (GivenLoan givenLoan : givenLoans) {
             givenLoanDtos.add(IGivenLoanMapper.INSTANCE.convertGivenLoanToGivenLoanDto(givenLoan));
         }
 
