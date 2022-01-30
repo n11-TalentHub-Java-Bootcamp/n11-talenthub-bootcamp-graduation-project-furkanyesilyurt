@@ -8,13 +8,13 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#About The Project">About The Project</a></li>
-    <li><a href="#Built With">Built With</a></li>
-    <li><a href="#Getting Started">Getting Started</a></li>
-    <li><a href="#Swagger Documentation">Swagger Documentation</a></li>
-    <li><a href="#EndPoints">EndPoints</a></li>
-    <li><a href="#License">License</a></li>
-    <li><a href="#Contact">Contact</a></li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#swagger-documentation">Swagger Documentation</a></li>
+    <li><a href="#endpoints">EndPoints</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -27,6 +27,7 @@ This project is a small e-banking system.
 * A customer can see the approved loan application with his identification number and birthday information.
 * You can find detailed information about the rules of the project [here](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system/2022.01.18_n11_TalentHub_Java_Spring_Bootcamp_Bitirme_Projesi_1.pdf).
 
+
 <!-- Built With -->
 ## Built With
 * [Java](https://www.java.com/tr/)
@@ -36,6 +37,7 @@ This project is a small e-banking system.
 * [PostgreSQL](https://www.postgresql.org/)
 * [Lombok](https://projectlombok.org/)
 * [Mapstruct](https://mapstruct.org/)
+
 
 <!-- Getting Started -->
 ## Getting Started
@@ -51,12 +53,14 @@ This project is a small e-banking system.
 3. Run the project then try it out https://localhost:8080/swagger-ui.html
 4. Send request to endpoints (The project is running on the 8080 port by defalt).
 
+
 <!-- Swagger Documentation -->
 ## Swagger Documentation
 ![Swagger](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system/images/swagger.PNG)
 ![Swagger2](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system/images/swagger2.PNG)
 
 You can reach the Swagger Api-doc.json at [here](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system/src/main/resources/api-doc.json).
+
 
 <!-- EndPoints -->
 ## EndPoints
@@ -78,6 +82,7 @@ You can reach the Swagger Api-doc.json at [here](https://github.com/n11-TalentHu
 <!-- License -->
 ## License
 Distributed under the MIT License. See LICENSE.txt for more information.
+
 
 <!-- Contact -->
 ## Contact
