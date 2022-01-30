@@ -33,7 +33,7 @@ class LoanStatusPage extends React.Component {
 
     handleResponse(response) {
         console.log(response.data)
-        this.setState({ flag: true, creditLimit: response.data.creditLimit });
+        this.setState({ flag: true, creditLimit: response.data[0].creditLimit });
     }
 
     handleError(error) {

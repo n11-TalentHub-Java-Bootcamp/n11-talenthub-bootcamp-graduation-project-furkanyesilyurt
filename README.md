@@ -13,6 +13,7 @@
     <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#swagger-documentation">Swagger Documentation</a></li>
     <li><a href="#endpoints">EndPoints</a></li>
+    <li><a href="#client-informations">Client Informations</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -77,6 +78,27 @@ You can reach the Swagger Api-doc.json at [here](https://github.com/n11-TalentHu
 | ------ | ----------------------------- | --------------------------------- |
 | GET    | /api/v1/loans                 | Apply for a loan with identity no |
 | GET    | /api/v1/loans/approved-credit | See aprovved loan application     |
+
+
+<!-- Client Informations -->
+## Client Informations
+This page welcomes you when the project is started.
+![](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system-client/images/front1.PNG)
+
+On this page you can register customers.
+![](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system-client/images/front2.PNG)
+
+On this page, you can apply for a loan with customer identification number.
+![](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system-client/images/front3.PNG)
+
+After applying for a loan, you will be greeted with this page informing you of the loan result.
+![](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system-client/images/front4.PNG)
+
+On this page you can see the approved loan application with the identification number and date of birth.
+![](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system-client/images/front5.PNG)
+
+After questioning the approved loan application, you will see this page.
+![](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system-client/images/front6.PNG)
 
 
 <!-- License -->
