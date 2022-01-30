@@ -1,0 +1,54 @@
+
+The credit score is calculated with the last two digits of the customer identification number.
+e.g. 10735264930 -> 30 * 10 + 10 = 400
+credit score = 400
+
+{
+  "identityNo": "10735264930",
+  "firstname": "Furkan",
+  "lastname": "Yesilyurt",
+  "monthlyIncome": 6500,
+  "phone": "5316261570",
+  "birthday": "1998-11-25",
+  "guarantee": 15000
+}
+
+{
+  "identityNo": "10735264945",
+  "firstname": "Ece",
+  "lastname": "Uzun",
+  "monthlyIncome": 3500,
+  "phone": "5316261570",
+  "birthday": "1997-12-20",
+  "guarantee": 10000
+}
+
+{
+  "identityNo": "10735264946",
+  "firstname": "Ayse",
+  "lastname": "Sarı",
+  "monthlyIncome": 7500,
+  "phone": "5316261570",
+  "birthday": "1993-03-15",
+  "guarantee": 10000
+}
+
+{
+  "identityNo": "10735264947",
+  "firstname": "Emre",
+  "lastname": "Yılmaz",
+  "monthlyIncome": 11000,
+  "phone": "5316261570",
+  "birthday": "1986-01-18",
+  "guarantee": 10000
+}
+
+{
+  "identityNo": "10735264999",
+  "firstname": "Zehra",
+  "lastname": "Celik",
+  "monthlyIncome": 5000,
+  "phone": "5316261570",
+  "birthday": "1999-06-20",
+  "guarantee": 10000
+}

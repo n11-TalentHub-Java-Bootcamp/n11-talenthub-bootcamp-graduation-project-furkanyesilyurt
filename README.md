@@ -54,6 +54,8 @@ This project is a small e-banking system.
 3. Run the project then try it out https://localhost:8080/swagger-ui.html
 4. Send request to endpoints (The project is running on the 8080 port by defalt).
 
+You can find the customer registration information [here](https://github.com/n11-TalentHub-Java-Bootcamp/n11-talenthub-bootcamp-graduation-project-furkanyesilyurt/blob/main/credit-application-system/src/main/resources/customer/RecommendedCustomers.txt), where you can test 5 different scenarios in the project.
+
 
 <!-- Swagger Documentation -->
 ## Swagger Documentation
